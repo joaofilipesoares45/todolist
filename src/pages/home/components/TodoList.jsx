@@ -53,7 +53,7 @@ export default function TodoList() {
                             </div>
                         </div>
                     )
-                }): <div><span className="none">{selectedDate === today() ? "Nenhuma tarefa para hoje!":"Nenhuma tarefa para o dia selecionado!"}</span></div>}
+                }): <span className="none">{selectedDate === today() ? "Nenhuma tarefa para hoje!":"Nenhuma tarefa para o dia selecionado!"}</span>}
             </div>
             <div className="options">
                 <button onClick={() => openModal('new-todo')}>Nova Tarefa <FontAwesomeIcon icon={faPlus} /></button>
