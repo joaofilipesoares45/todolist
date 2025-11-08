@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faPlus, faSquare, faSquareCheck, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faSquare, faSquareCheck, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { DataContext } from "../../../context/DataContext";
 import { openModal, today } from "../../../utils/functions";
@@ -33,30 +33,26 @@ export default function TodoList() {
 
     return (
         <div className="todo-list">
-            <nav className="select-date">
-                    <label htmlFor="date">Selecione a data: </label>
-                    <input type="date" name="date" id="date" onChange={({target}) => setSelectedDate(target.value)}/>
-                </nav>
+            <nav className="select-date shadow-md">
+                <input type="date" name="date" id="date" onChange={({ target }) => setSelectedDate(target.value)} />
+            </nav>
             <div className="list">
-                {listToDos.filter(({data}) => data === selectedDate).length > 0 ? listToDos.map((item, index) => {
+                {listToDos.filter(({ data }) => data === selectedDate).length > 0 ? listToDos.map((item, index) => {
                     const delay = `${index * Number(".05")}s`
                     return (
-                        <div className="item" key={"todo" + index} visible={item.data === selectedDate ? "true" : "false"} style={{animationDelay:delay}}>
+                        <div className="item shadow-sm" key={"todo" + index} visible={item.data === selectedDate ? "true" : "false"} style={{ animationDelay: delay }}>
                             <div className="info">
                                 <span>
                                     {item.status ? <FontAwesomeIcon icon={faSquareCheck} onClick={() => setCompleted(index)} /> : <FontAwesomeIcon icon={faSquare} onClick={() => setCompleted(index)} />}
                                     <p color={item.prioridade}></p>
                                 </span>
 
-                                <h4>{item.texto}</h4>
+                                <h4 className={item.status === "completed" && "line-through"}>{item.texto}</h4>
                                 <nav><FontAwesomeIcon icon={faPencil} onClick={() => { openModal("edit-todo"); setSelectedTodo(index) }} />{item.status && <FontAwesomeIcon icon={faTrashCan} onClick={() => deleteTask(index)} />}</nav>
                             </div>
                         </div>
                     )
-                }): <span className="none">{selectedDate === today() ? "Nenhuma tarefa para hoje!":"Nenhuma tarefa para o dia selecionado!"}</span>}
-            </div>
-            <div className="options">
-                <button onClick={() => openModal('new-todo')}>Nova Tarefa <FontAwesomeIcon icon={faPlus} /></button>
+                }) : <span className="none dark:text-white h-full flex items-center justify-center">{selectedDate === today() ? "Nenhuma tarefa para hoje!" : "Nenhuma tarefa para o dia selecionado!"}</span>}
             </div>
         </div>
     )
